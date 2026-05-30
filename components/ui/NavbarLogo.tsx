@@ -1,6 +1,6 @@
 "use client";
 
-const green = "#15a06a";
+const green = "#39d353";
 
 function CannabisLeafMini({ size = 22 }: { size?: number }) {
   return (
