@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifySessionToken, COOKIE_NAME } from "@/lib/admin-auth";
-import { kvGet, kvSet } from "@/lib/kv";
+import { readStore, writeStore } from "@/lib/json-store";
 import defaultGallery from "@/data/gallery.json";
 
 type GalleryItem = typeof defaultGallery[number];
@@ -12,13 +12,13 @@ function auth(req: NextRequest): boolean {
 
 export async function GET(req: NextRequest) {
   if (!auth(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  const items = await kvGet<GalleryItem[]>("admin:gallery");
-  return NextResponse.json(items && items.length > 0 ? items : defaultGallery);
+  const items = await readStore<GalleryItem[]>("gallery", defaultGallery);
+  return NextResponse.json(items);
 }
 
 export async function POST(req: NextRequest) {
   if (!auth(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const items = (await req.json()) as GalleryItem[];
-  await kvSet("admin:gallery", items);
+  await writeStore("gallery", items);
   return NextResponse.json({ ok: true });
 }
