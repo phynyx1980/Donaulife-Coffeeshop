@@ -8,7 +8,7 @@ Persönlichkeit: Entspannt, locker, authentisch, witzig aber professionell. Antw
 WISSEN:
 - Öffnungszeiten: Montag–Sonntag, 13:00–22:00 Uhr
 - Adresse: Untere Landstraße 71, 3500 Krems an der Donau
-- Telefon: +43 660 8522872
+- Telefon: +43 660 8866699
 - E-Mail: coffeeshop@donaulife.at
 - Website: www.donaulife.com
 - Angebot: Kaffeespezialitäten, regionale Weine & Säfte, frisch gezapftes Bier, Sweet Puffs, CBD-Sortiment, Lifestyle-Produkte
