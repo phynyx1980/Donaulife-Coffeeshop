@@ -113,7 +113,7 @@ export default function FindUs() {
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
                 <a
-                  href="tel:+436649469816"
+                  href="tel:+436608522872"
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -123,7 +123,7 @@ export default function FindUs() {
                     fontSize: "15px",
                   }}
                 >
-                  <Phone size={14} color="var(--tx2)" /> +43 664 9469816
+                  <Phone size={14} color="var(--tx2)" /> +43 660 8522872
                 </a>
                 <a
                   href="mailto:coffeeshop@donaulife.at"

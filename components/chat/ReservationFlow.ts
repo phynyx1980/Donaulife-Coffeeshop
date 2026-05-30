@@ -147,7 +147,7 @@ export function buildWhatsAppUrl(data: Partial<ReservationData>, lang: Language)
     `📞 ${isDE ? "Kontakt" : "Contact"}: ${data.contact ?? "–"}`,
   ].join("\n");
 
-  const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "436649469816";
+  const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "436608522872";
   return `https://wa.me/${number}?text=${encodeURIComponent(msg)}`;
 }
 
