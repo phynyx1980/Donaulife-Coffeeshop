@@ -113,7 +113,7 @@ export default function FindUs() {
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
                 <a
-                  href="tel:+436608522872"
+                  href="tel:+436608866699"
                   style={{
                     display: "flex",
                     alignItems: "center",
