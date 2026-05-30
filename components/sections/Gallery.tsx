@@ -55,7 +55,7 @@ export default function Gallery() {
   const filtered = filter === "all" ? items : items.filter((i) => i.cat === filter);
 
   const lightboxImages = filtered.map((item) => ({
-    url: isSvgPlaceholder(item.file) ? "" : `/gallery/${item.file}`,
+    url: isSvgPlaceholder(item.file) ? "" : resolveUrl(item.file),
     caption: lang === "de" ? item.caption_de : item.caption_en,
   }));
 
