@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifySessionToken, COOKIE_NAME } from "@/lib/admin-auth";
-import { readStore, writeStore } from "@/lib/json-store";
+import { supabaseAdmin } from "@/lib/supabase";
 import defaultGallery from "@/data/gallery.json";
 
 type GalleryItem = typeof defaultGallery[number];
@@ -12,13 +12,29 @@ function auth(req: NextRequest): boolean {
 
 export async function GET(req: NextRequest) {
   if (!auth(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  const items = await readStore<GalleryItem[]>("gallery", defaultGallery);
-  return NextResponse.json(items);
+  const { data, error } = await supabaseAdmin
+    .from("gallery")
+    .select("*")
+    .order("sort_order", { ascending: true });
+  if (error || !data || data.length === 0) return NextResponse.json(defaultGallery);
+  return NextResponse.json(data as GalleryItem[]);
 }
 
 export async function POST(req: NextRequest) {
   if (!auth(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const items = (await req.json()) as GalleryItem[];
-  await writeStore("gallery", items);
+
+  await supabaseAdmin.from("gallery").delete().neq("id", 0);
+  if (items.length > 0) {
+    const rows = items.map((item, i) => ({
+      file: item.file,
+      cat: item.cat,
+      caption_de: item.caption_de,
+      caption_en: item.caption_en,
+      sort_order: i,
+    }));
+    const { error } = await supabaseAdmin.from("gallery").insert(rows);
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  }
   return NextResponse.json({ ok: true });
 }
