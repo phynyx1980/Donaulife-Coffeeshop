@@ -121,7 +121,7 @@ export default function Gallery() {
             {filtered.map((item, idx) => {
               const caption = lang === "de" ? item.caption_de : item.caption_en;
               const height = HEIGHTS[idx % HEIGHTS.length];
-              const src = `/gallery/${item.file}`;
+              const src = resolveUrl(item.file);
               const usePlaceholder = isSvgPlaceholder(item.file);
 
               return (
