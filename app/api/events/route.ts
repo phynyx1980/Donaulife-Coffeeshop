@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { readStore } from "@/lib/json-store";
+import { supabase } from "@/lib/supabase";
 import type { DonauEvent } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -11,6 +11,11 @@ const FALLBACK: DonauEvent[] = [
 ];
 
 export async function GET() {
-  const events = await readStore<DonauEvent[]>("events", FALLBACK);
-  return NextResponse.json(events);
+  const { data, error } = await supabase
+    .from("events")
+    .select("*")
+    .order("sort_order", { ascending: true });
+
+  if (error || !data) return NextResponse.json(FALLBACK);
+  return NextResponse.json(data as DonauEvent[]);
 }
