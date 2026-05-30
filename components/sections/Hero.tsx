@@ -350,7 +350,7 @@ export default function Hero({ onChatOpen }: HeroProps) {
           style={{
             width: "clamp(100px, 14vw, 160px)",
             height: "auto",
-            filter: "brightness(8)",
+            filter: "brightness(0) invert(1)",
             opacity: 0.4,
           }}
         />
