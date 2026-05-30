@@ -83,7 +83,7 @@ export default function Hero({ onChatOpen }: HeroProps) {
         if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(21,160,106,${p.opacity})`;
+        ctx.fillStyle = `rgba(57,211,83,${p.opacity})`;
         ctx.fill();
       }
 
@@ -97,7 +97,7 @@ export default function Hero({ onChatOpen }: HeroProps) {
             ctx.beginPath();
             ctx.moveTo(pts[i].x, pts[i].y);
             ctx.lineTo(pts[j].x, pts[j].y);
-            ctx.strokeStyle = `rgba(21,160,106,${0.04 * (1 - d / 90)})`;
+            ctx.strokeStyle = `rgba(57,211,83,${0.04 * (1 - d / 90)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -119,9 +119,9 @@ export default function Hero({ onChatOpen }: HeroProps) {
           progress > 0.6  ? ((1 - progress) / 0.4) * 0.28 : 0.28;
 
         const grad = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.radius);
-        grad.addColorStop(0, `rgba(21,160,106,${alpha})`);
-        grad.addColorStop(0.5, `rgba(21,160,106,${alpha * 0.5})`);
-        grad.addColorStop(1, `rgba(21,160,106,0)`);
+        grad.addColorStop(0, `rgba(57,211,83,${alpha})`);
+        grad.addColorStop(0.5, `rgba(57,211,83,${alpha * 0.5})`);
+        grad.addColorStop(1, `rgba(57,211,83,0)`);
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
         ctx.fillStyle = grad;
@@ -179,7 +179,7 @@ export default function Hero({ onChatOpen }: HeroProps) {
         transform: "translate(-50%,-50%)",
         width: "600px",
         height: "340px",
-        background: "radial-gradient(ellipse, rgba(21,160,106,0.12) 0%, transparent 68%)",
+        background: "radial-gradient(ellipse, rgba(57,211,83,0.12) 0%, transparent 68%)",
         filter: "blur(12px)",
         pointerEvents: "none",
         zIndex: 1,
@@ -211,8 +211,8 @@ export default function Hero({ onChatOpen }: HeroProps) {
               // Preserve original green colors: only drop-shadow for glow, no brightness distortion
               filter:
                 "drop-shadow(0 0 1px rgba(255,255,255,0.6)) " +
-                "drop-shadow(0 0 22px rgba(21,160,106,0.65)) " +
-                "drop-shadow(0 0 50px rgba(21,160,106,0.28))",
+                "drop-shadow(0 0 22px rgba(57,211,83,0.65)) " +
+                "drop-shadow(0 0 50px rgba(57,211,83,0.28))",
             }}
           >
             <Image
@@ -246,7 +246,7 @@ export default function Hero({ onChatOpen }: HeroProps) {
         {/* Divider */}
         <motion.div variants={item} style={{
           width: "60px", height: "1px",
-          background: "linear-gradient(90deg, transparent, rgba(21,160,106,0.5), transparent)",
+          background: "linear-gradient(90deg, transparent, rgba(57,211,83,0.5), transparent)",
           margin: "18px 0 20px",
         }}/>
 
@@ -277,7 +277,7 @@ export default function Hero({ onChatOpen }: HeroProps) {
             textTransform: "uppercase",
             letterSpacing: "0.02em",
             display: "block",
-            filter: "drop-shadow(0 0 18px rgba(21,160,106,0.4))",
+            filter: "drop-shadow(0 0 18px rgba(57,211,83,0.4))",
           }}>
             &amp; GOOD TIMES
           </div>
@@ -305,7 +305,7 @@ export default function Hero({ onChatOpen }: HeroProps) {
               borderRadius: "50px", padding: "13px 28px", fontSize: "15px",
               fontWeight: 700, cursor: "pointer", fontFamily: "var(--font-syne)",
               transition: "opacity 0.2s, transform 0.15s",
-              boxShadow: "0 0 24px rgba(21,160,106,0.3)",
+              boxShadow: "0 0 24px rgba(57,211,83,0.3)",
             }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "0.88"; (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = "1"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}
