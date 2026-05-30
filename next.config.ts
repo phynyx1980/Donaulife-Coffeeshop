@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "**.cdninstagram.com" },
       { protocol: "https", hostname: "**.fbcdn.net" },
       { protocol: "https", hostname: "graph.instagram.com" },
+      { protocol: "https", hostname: "*.supabase.co" },
     ],
   },
 };
