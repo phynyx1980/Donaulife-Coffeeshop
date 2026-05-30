@@ -57,7 +57,7 @@ export default function Impressum() {
           <p><strong style={{ color: "var(--tx)" }}>Donaulife Coffeeshop</strong></p>
           <p>Untere Landstraße 71<br />3500 Krems an der Donau<br />Österreich</p>
           <p>
-            Tel: <a href="tel:+436608866699" style={{ color: "var(--green)" }}>+43 660 8522872</a><br />
+            Tel: <a href="tel:+436608866699" style={{ color: "var(--green)" }}>+43 660 8866699</a><br />
             E-Mail: <a href="mailto:coffeeshop@donaulife.at" style={{ color: "var(--green)" }}>coffeeshop@donaulife.at</a>
           </p>
         </div>
