@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ZoomIn } from "lucide-react";
 import Image from "next/image";
 import SectionHead from "@/components/ui/SectionHead";
 import Lightbox from "@/components/ui/Lightbox";
 import { useLanguage } from "@/lib/i18n";
-import galleryData from "@/data/gallery.json";
+import defaultGallery from "@/data/gallery.json";
 
 type GalleryEntry = {
   id: number;
