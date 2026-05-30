@@ -206,10 +206,10 @@ const translations = {
     footer_datenschutz: "Privacy Policy",
 
     // Chat
-    chat_greeting: "Hey! I'm Donau-Bot 🌿 How can I help you? Ask me about opening hours, products or events — or start a reservation right away!",
+    chat_greeting: "Hey! I'm Bud 🌿 How can I help you? Ask me about opening hours, products or events — or start a reservation right away!",
     chat_placeholder: "Write a message...",
     chat_send: "Send",
-    chat_title: "Donau-Bot",
+    chat_title: "Bud",
     chat_online: "Online",
     chat_reservation_badge: "Reservation in progress",
 
