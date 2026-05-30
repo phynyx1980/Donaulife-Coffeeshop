@@ -17,6 +17,8 @@ export default function Footer() {
       }}
     >
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+
+        {/* Top row: Logo + Social Links */}
         <div
           style={{
             display: "flex",
@@ -27,21 +29,31 @@ export default function Footer() {
             marginBottom: "32px",
           }}
         >
-          {/* Logo */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
-            <Image src="/logo.svg" alt="Donaulife Coffeeshop" width={160} height={32} style={{ height: "32px", width: "auto" }} />
-            <div
+          {/* Original Logo */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+            <Image
+              src="/logo.png"
+              alt="donau LIFE Coffeeshop"
+              width={220}
+              height={44}
+              style={{
+                width: "clamp(160px, 20vw, 220px)",
+                height: "auto",
+                filter: "brightness(8)",
+              }}
+            />
+            <span
               style={{
                 fontFamily: "var(--font-syne)",
                 fontSize: "9px",
-                color: "var(--tx2)",
-                letterSpacing: "0.22em",
+                color: "rgba(255,255,255,0.25)",
+                letterSpacing: "0.35em",
                 textTransform: "uppercase",
                 paddingLeft: "1px",
               }}
             >
               coffeeshop
-            </div>
+            </span>
           </div>
 
           {/* Social Links */}
@@ -50,15 +62,7 @@ export default function Footer() {
               href="https://www.instagram.com/donaulifecoffeeshop/"
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-                color: "var(--tx2)",
-                textDecoration: "none",
-                fontSize: "14px",
-                transition: "color 0.2s",
-              }}
+              style={{ display: "flex", alignItems: "center", gap: "8px", color: "var(--tx2)", textDecoration: "none", fontSize: "14px", transition: "color 0.2s" }}
               onMouseEnter={(e) => (e.currentTarget.style.color = "var(--green)")}
               onMouseLeave={(e) => (e.currentTarget.style.color = "var(--tx2)")}
             >
@@ -68,15 +72,7 @@ export default function Footer() {
               href="https://www.instagram.com/donaulife/"
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-                color: "var(--tx2)",
-                textDecoration: "none",
-                fontSize: "14px",
-                transition: "color 0.2s",
-              }}
+              style={{ display: "flex", alignItems: "center", gap: "8px", color: "var(--tx2)", textDecoration: "none", fontSize: "14px", transition: "color 0.2s" }}
               onMouseEnter={(e) => (e.currentTarget.style.color = "var(--green)")}
               onMouseLeave={(e) => (e.currentTarget.style.color = "var(--tx2)")}
             >
@@ -86,15 +82,7 @@ export default function Footer() {
               href="https://www.donaulife.com"
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-                color: "var(--tx2)",
-                textDecoration: "none",
-                fontSize: "14px",
-                transition: "color 0.2s",
-              }}
+              style={{ display: "flex", alignItems: "center", gap: "8px", color: "var(--tx2)", textDecoration: "none", fontSize: "14px", transition: "color 0.2s" }}
               onMouseEnter={(e) => (e.currentTarget.style.color = "var(--green)")}
               onMouseLeave={(e) => (e.currentTarget.style.color = "var(--tx2)")}
             >
@@ -103,36 +91,58 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom */}
+        {/* Bottom row: Copyright + Legal links */}
         <div
           style={{
             borderTop: "1px solid var(--border)",
             paddingTop: "24px",
             display: "flex",
             flexWrap: "wrap",
-            gap: "12px",
+            gap: "16px",
             justifyContent: "space-between",
             alignItems: "center",
           }}
         >
-          <p style={{ color: "var(--tx2)", fontSize: "13px", margin: 0 }}>
-            {t("footer_copy")}
-          </p>
+          {/* Left: Logo klein + Copyright */}
+          <div style={{ display: "flex", alignItems: "center", gap: "14px", flexWrap: "wrap" }}>
+            <Image
+              src="/logo.png"
+              alt="donau LIFE"
+              width={100}
+              height={20}
+              style={{
+                width: "100px",
+                height: "auto",
+                filter: "brightness(8)",
+                opacity: 0.55,
+              }}
+            />
+            <p style={{ color: "var(--tx2)", fontSize: "12px", margin: 0 }}>
+              {t("footer_copy")}
+            </p>
+          </div>
+
+          {/* Right: Impressum + Datenschutz */}
           <div style={{ display: "flex", gap: "16px" }}>
             <Link
               href="/impressum"
-              style={{ color: "var(--tx2)", fontSize: "13px", textDecoration: "none" }}
+              style={{ color: "var(--tx2)", fontSize: "13px", textDecoration: "none", transition: "color 0.2s" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--green)")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--tx2)")}
             >
               {t("footer_impressum")}
             </Link>
             <Link
               href="/datenschutz"
-              style={{ color: "var(--tx2)", fontSize: "13px", textDecoration: "none" }}
+              style={{ color: "var(--tx2)", fontSize: "13px", textDecoration: "none", transition: "color 0.2s" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--green)")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--tx2)")}
             >
               {t("footer_datenschutz")}
             </Link>
           </div>
         </div>
+
       </div>
     </footer>
   );
