@@ -59,7 +59,7 @@ function getMockResponse(message: string): string {
       return response;
     }
   }
-  return "Hey! Ich bin Donau-Bot 🌿 Du kannst mich nach Öffnungszeiten, Events, unserem Angebot oder einer Tischreservierung fragen!";
+  return "Hey! Ich bin Bud 🌿 Du kannst mich nach Öffnungszeiten, Events, unserem Angebot oder einer Tischreservierung fragen!";
 }
 
 export async function POST(req: NextRequest) {
