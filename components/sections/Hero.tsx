@@ -247,34 +247,53 @@ export default function Hero({ onChatOpen }: HeroProps) {
         <motion.div variants={item} style={{
           width: "60px", height: "1px",
           background: "linear-gradient(90deg, transparent, rgba(21,160,106,0.5), transparent)",
-          margin: "20px 0 24px",
+          margin: "18px 0 20px",
         }}/>
 
-        {/* H1 */}
-        <motion.h1 variants={item} style={{
-          fontFamily: "var(--font-syne)",
-          fontSize: "clamp(26px, 4vw, 52px)",
-          fontWeight: 700,
-          lineHeight: 1.15,
-          letterSpacing: "-0.5px",
-          color: "var(--tx)",
-          marginBottom: "14px",
-          maxWidth: "660px",
-        }}>
-          {t("hero_h1")}
-        </motion.h1>
+        {/* ── HAUPTSLOGAN: COFFEE, VIBES & GOOD TIMES ── */}
+        <motion.div variants={item} style={{ marginBottom: "28px", textAlign: "center" }}>
+          {/* Zeile 1: COFFEE, VIBES */}
+          <div style={{
+            fontFamily: "var(--font-playfair)",
+            fontSize: "clamp(42px, 7.5vw, 96px)",
+            fontWeight: 900,
+            fontStyle: "normal",
+            lineHeight: 1,
+            color: "#ffffff",
+            textTransform: "uppercase",
+            letterSpacing: "0.02em",
+            display: "block",
+          }}>
+            COFFEE, VIBES
+          </div>
+          {/* Zeile 2: & GOOD TIMES – grün + kursiv */}
+          <div style={{
+            fontFamily: "var(--font-playfair)",
+            fontSize: "clamp(42px, 7.5vw, 96px)",
+            fontWeight: 900,
+            fontStyle: "italic",
+            lineHeight: 1.05,
+            color: "var(--green)",
+            textTransform: "uppercase",
+            letterSpacing: "0.02em",
+            display: "block",
+            filter: "drop-shadow(0 0 18px rgba(21,160,106,0.4))",
+          }}>
+            &amp; GOOD TIMES
+          </div>
+        </motion.div>
 
-        {/* Sub */}
+        {/* Adresse — wie im Referenzbild */}
         <motion.p variants={item} style={{
           fontFamily: "var(--font-syne)",
-          fontSize: "clamp(10px, 1.2vw, 13px)",
+          fontSize: "clamp(10px, 1.1vw, 12px)",
           fontWeight: 600,
-          letterSpacing: "0.28em",
+          letterSpacing: "0.22em",
           textTransform: "uppercase",
           color: "var(--tx2)",
-          marginBottom: "34px",
+          marginBottom: "32px",
         }}>
-          {t("hero_sub")}
+          Untere Landstraße 71 &nbsp;·&nbsp; Krems an der Donau
         </motion.p>
 
         {/* CTAs */}

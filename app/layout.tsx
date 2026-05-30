@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Quicksand, DM_Sans, Nunito } from "next/font/google";
+import { Quicksand, DM_Sans, Nunito, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/lib/i18n";
 
@@ -14,6 +14,14 @@ const nunito = Nunito({
   subsets: ["latin"],
   weight: ["300", "400", "700", "900"],
   variable: "--font-nunito",
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["700", "800", "900"],
+  style: ["normal", "italic"],
+  variable: "--font-playfair",
   display: "swap",
 });
 
@@ -60,7 +68,7 @@ export default function RootLayout({
   return (
     <html
       lang="de"
-      className={`${quicksand.variable} ${nunito.variable} ${dmSans.variable}`}
+      className={`${quicksand.variable} ${nunito.variable} ${dmSans.variable} ${playfair.variable}`}
       suppressHydrationWarning
     >
       <body>
