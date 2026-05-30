@@ -86,10 +86,10 @@ const translations = {
     footer_datenschutz: "Datenschutz",
 
     // Chat
-    chat_greeting: "Hey! Ich bin der Donau-Bot 🌿 Wie kann ich dir helfen? Frag mich zu Öffnungszeiten, Angebot oder Events — oder starte direkt eine Reservierung!",
+    chat_greeting: "Hey! Ich bin Bud 🌿 Wie kann ich dir helfen? Frag mich zu Öffnungszeiten, Angebot oder Events — oder starte direkt eine Reservierung!",
     chat_placeholder: "Schreib eine Nachricht...",
     chat_send: "Senden",
-    chat_title: "Donau-Bot",
+    chat_title: "Bud",
     chat_online: "Online",
     chat_reservation_badge: "Reservierung läuft",
 
