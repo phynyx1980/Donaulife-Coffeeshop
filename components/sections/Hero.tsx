@@ -250,18 +250,18 @@ export default function Hero({ onChatOpen }: HeroProps) {
           margin: "18px 0 20px",
         }}/>
 
-        {/* ── HAUPTSLOGAN: COFFEE, VIBES & GOOD TIMES ── */}
+        {/* ── SLOGAN: COFFEE, VIBES & GOOD TIMES ── */}
         <motion.div variants={item} style={{ marginBottom: "28px", textAlign: "center" }}>
           {/* Zeile 1: COFFEE, VIBES */}
           <div style={{
             fontFamily: "var(--font-playfair)",
-            fontSize: "clamp(42px, 7.5vw, 96px)",
-            fontWeight: 900,
+            fontSize: "clamp(20px, 3.2vw, 44px)",
+            fontWeight: 700,
             fontStyle: "normal",
             lineHeight: 1,
-            color: "#ffffff",
+            color: "rgba(255,255,255,0.7)",
             textTransform: "uppercase",
-            letterSpacing: "0.02em",
+            letterSpacing: "0.06em",
             display: "block",
           }}>
             COFFEE, VIBES
@@ -269,15 +269,15 @@ export default function Hero({ onChatOpen }: HeroProps) {
           {/* Zeile 2: & GOOD TIMES – grün + kursiv */}
           <div style={{
             fontFamily: "var(--font-playfair)",
-            fontSize: "clamp(42px, 7.5vw, 96px)",
-            fontWeight: 900,
+            fontSize: "clamp(20px, 3.2vw, 44px)",
+            fontWeight: 700,
             fontStyle: "italic",
-            lineHeight: 1.05,
+            lineHeight: 1.1,
             color: "var(--green)",
             textTransform: "uppercase",
-            letterSpacing: "0.02em",
+            letterSpacing: "0.06em",
             display: "block",
-            filter: "drop-shadow(0 0 18px rgba(57,211,83,0.4))",
+            filter: "drop-shadow(0 0 12px rgba(57,211,83,0.35))",
           }}>
             &amp; GOOD TIMES
           </div>
