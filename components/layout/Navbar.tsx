@@ -62,7 +62,7 @@ export default function Navbar({ onChatOpen }: NavbarProps) {
             width={160}
             height={32}
             priority
-            style={{ height: "32px", width: "auto", filter: "brightness(10)" }}
+            style={{ height: "32px", width: "auto", filter: "brightness(0) invert(1)" }}
           />
           <span style={{
             fontFamily: "var(--font-syne)",
