@@ -34,12 +34,24 @@ function isSvgPlaceholder(file: string) {
   return /\.svg$/i.test(file) || !isImage(file);
 }
 
+// Resolve file path: admin uploads use full /uploads/ path, legacy use /gallery/
+function resolveUrl(file: string): string {
+  if (file.startsWith("/")) return file;
+  return `/gallery/${file}`;
+}
+
 export default function Gallery() {
   const { lang, t } = useLanguage();
   const [filter, setFilter] = useState<string>("all");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [items, setItems] = useState<GalleryEntry[]>(defaultGallery);
 
-  const items: GalleryEntry[] = galleryData;
+  useEffect(() => {
+    fetch("/api/gallery")
+      .then((r) => r.json())
+      .then((data: GalleryEntry[]) => setItems(data))
+      .catch(() => setItems(defaultGallery));
+  }, []);
   const filtered = filter === "all" ? items : items.filter((i) => i.cat === filter);
 
   const lightboxImages = filtered.map((item) => ({
