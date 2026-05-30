@@ -11,22 +11,10 @@ interface HeroProps {
 }
 
 interface Particle {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  radius: number;
-  opacity: number;
+  x: number; y: number; vx: number; vy: number; radius: number; opacity: number;
 }
-
 interface SmokeParticle {
-  x: number;
-  y: number;
-  vy: number;
-  vx: number;
-  radius: number;
-  life: number;
-  maxLife: number;
+  x: number; y: number; vy: number; vx: number; radius: number; life: number; maxLife: number; wobble: number;
 }
 
 export default function Hero({ onChatOpen }: HeroProps) {
@@ -36,17 +24,19 @@ export default function Hero({ onChatOpen }: HeroProps) {
   const particlesRef = useRef<Particle[]>([]);
   const smokeRef = useRef<SmokeParticle[]>([]);
 
+  // Spawn one smoke particle from the leaf center
   const spawnSmoke = useCallback((cx: number, cy: number) => {
-    if (smokeRef.current.length > 20) return;
-    const life = 80 + Math.random() * 60;
+    if (smokeRef.current.length > 40) return;
+    const life = 100 + Math.random() * 80;
     smokeRef.current.push({
-      x: cx + (Math.random() - 0.5) * 20,
+      x: cx + (Math.random() - 0.5) * 30,
       y: cy,
-      vy: -(0.4 + Math.random() * 0.3),
-      vx: (Math.random() - 0.5) * 0.2,
-      radius: 4 + Math.random() * 6,
+      vy: -(0.5 + Math.random() * 0.5),
+      vx: (Math.random() - 0.5) * 0.3,
+      radius: 6 + Math.random() * 10,
       life: 0,
       maxLife: life,
+      wobble: Math.random() * Math.PI * 2,
     });
   }, []);
 
@@ -63,13 +53,14 @@ export default function Hero({ onChatOpen }: HeroProps) {
     resize();
     window.addEventListener("resize", resize);
 
-    particlesRef.current = Array.from({ length: 55 }, () => ({
+    // Background network particles
+    particlesRef.current = Array.from({ length: 60 }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      radius: Math.random() * 1.2 + 0.3,
-      opacity: Math.random() * 0.35 + 0.05,
+      vx: (Math.random() - 0.5) * 0.28,
+      vy: (Math.random() - 0.5) * 0.28,
+      radius: Math.random() * 1.3 + 0.3,
+      opacity: Math.random() * 0.3 + 0.04,
     }));
 
     let frame = 0;
@@ -78,16 +69,16 @@ export default function Hero({ onChatOpen }: HeroProps) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       frame++;
 
-      // Smoke source: center of logo (leaf position)
+      // Smoke source: center of the big hero logo (leaf position)
       const smokeX = canvas.width / 2;
-      const smokeY = canvas.height * 0.3;
-      if (frame % 10 === 0) spawnSmoke(smokeX, smokeY);
+      const smokeY = canvas.height * 0.28; // just above center logo
+      // Spawn more frequently for denser smoke
+      if (frame % 6 === 0) spawnSmoke(smokeX, smokeY);
 
-      // Particles
+      // Network particles
       const pts = particlesRef.current;
       for (const p of pts) {
-        p.x += p.vx;
-        p.y += p.vy;
+        p.x += p.vx; p.y += p.vy;
         if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
         if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
         ctx.beginPath();
@@ -106,25 +97,30 @@ export default function Hero({ onChatOpen }: HeroProps) {
             ctx.beginPath();
             ctx.moveTo(pts[i].x, pts[i].y);
             ctx.lineTo(pts[j].x, pts[j].y);
-            ctx.strokeStyle = `rgba(21,160,106,${0.05 * (1 - d / 90)})`;
+            ctx.strokeStyle = `rgba(21,160,106,${0.04 * (1 - d / 90)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
         }
       }
 
-      // Smoke
+      // Smoke particles — dense, wispy, rising
       smokeRef.current = smokeRef.current.filter(s => s.life < s.maxLife);
       for (const s of smokeRef.current) {
         s.life++;
-        s.x += s.vx;
+        s.wobble += 0.02;
+        s.x += s.vx + Math.sin(s.wobble) * 0.15;
         s.y += s.vy;
-        s.vx += (Math.random() - 0.5) * 0.03;
-        s.radius += 0.08;
-        const p = s.life / s.maxLife;
-        const a = p < 0.25 ? (p / 0.25) * 0.18 : p > 0.65 ? ((1 - p) / 0.35) * 0.18 : 0.18;
+        s.radius += 0.1;
+
+        const progress = s.life / s.maxLife;
+        const alpha =
+          progress < 0.2  ? (progress / 0.2) * 0.28 :
+          progress > 0.6  ? ((1 - progress) / 0.4) * 0.28 : 0.28;
+
         const grad = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.radius);
-        grad.addColorStop(0, `rgba(21,160,106,${a})`);
+        grad.addColorStop(0, `rgba(21,160,106,${alpha})`);
+        grad.addColorStop(0.5, `rgba(21,160,106,${alpha * 0.5})`);
         grad.addColorStop(1, `rgba(21,160,106,0)`);
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
@@ -160,7 +156,7 @@ export default function Hero({ onChatOpen }: HeroProps) {
       style={{
         position: "relative",
         height: "100dvh",
-        minHeight: "640px",
+        minHeight: "680px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -169,6 +165,7 @@ export default function Hero({ onChatOpen }: HeroProps) {
         background: "var(--bg)",
       }}
     >
+      {/* Canvas background */}
       <canvas
         ref={canvasRef}
         style={{ position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: 0 }}
@@ -177,17 +174,18 @@ export default function Hero({ onChatOpen }: HeroProps) {
       {/* Glow behind logo */}
       <div style={{
         position: "absolute",
-        top: "26%",
+        top: "30%",
         left: "50%",
         transform: "translate(-50%,-50%)",
-        width: "480px",
-        height: "280px",
-        background: "radial-gradient(ellipse, rgba(21,160,106,0.1) 0%, transparent 70%)",
-        filter: "blur(10px)",
+        width: "600px",
+        height: "340px",
+        background: "radial-gradient(ellipse, rgba(21,160,106,0.12) 0%, transparent 68%)",
+        filter: "blur(12px)",
         pointerEvents: "none",
         zIndex: 1,
       }}/>
 
+      {/* ── MAIN CONTENT ── */}
       <motion.div
         variants={container}
         initial="hidden"
@@ -202,40 +200,43 @@ export default function Hero({ onChatOpen }: HeroProps) {
           alignItems: "center",
         }}
       >
-        {/* ── LOGO ── */}
-        <motion.div variants={item} style={{ marginBottom: "8px" }}>
-          {/* Animated logo — float + glow */}
+        {/* ── BIG LOGO ── */}
+        <motion.div variants={item} style={{ marginBottom: "12px" }}>
           <motion.div
-            animate={{ y: [0, -8, 0, -4, 0] }}
-            transition={{ duration: 5, ease: "easeInOut", repeat: Infinity }}
+            animate={{ y: [0, -10, 0, -5, 0] }}
+            transition={{ duration: 5.5, ease: "easeInOut", repeat: Infinity }}
             style={{
-              filter: "drop-shadow(0 0 18px rgba(21,160,106,0.5)) drop-shadow(0 0 40px rgba(21,160,106,0.2))",
               display: "flex",
               justifyContent: "center",
+              // Preserve original green colors: only drop-shadow for glow, no brightness distortion
+              filter:
+                "drop-shadow(0 0 1px rgba(255,255,255,0.6)) " +
+                "drop-shadow(0 0 22px rgba(21,160,106,0.65)) " +
+                "drop-shadow(0 0 50px rgba(21,160,106,0.28))",
             }}
           >
             <Image
               src="/logo.png"
               alt="donau LIFE Coffeeshop"
-              width={480}
-              height={96}
+              width={700}
+              height={140}
               priority
               style={{
-                width: "clamp(260px, 45vw, 480px)",
+                width: "clamp(340px, 58vw, 700px)",
                 height: "auto",
-                filter: "brightness(8) drop-shadow(0 0 18px rgba(21,160,106,0.5)) drop-shadow(0 0 40px rgba(21,160,106,0.2))",
               }}
             />
           </motion.div>
-          {/* COFFEESHOP label */}
+
+          {/* COFFEESHOP sub-label */}
           <div style={{
             fontFamily: "var(--font-syne)",
             fontWeight: 600,
             fontSize: "clamp(9px, 1vw, 12px)",
-            letterSpacing: "0.4em",
+            letterSpacing: "0.45em",
             textTransform: "uppercase",
-            color: "rgba(255,255,255,0.28)",
-            marginTop: "8px",
+            color: "rgba(255,255,255,0.22)",
+            marginTop: "10px",
             textAlign: "center",
           }}>
             coffeeshop
@@ -244,39 +245,21 @@ export default function Hero({ onChatOpen }: HeroProps) {
 
         {/* Divider */}
         <motion.div variants={item} style={{
-          width: "56px",
-          height: "1px",
-          background: "linear-gradient(90deg, transparent, rgba(21,160,106,0.55), transparent)",
+          width: "60px", height: "1px",
+          background: "linear-gradient(90deg, transparent, rgba(21,160,106,0.5), transparent)",
           margin: "20px 0 24px",
         }}/>
-
-        {/* Badge */}
-        <motion.div variants={item}>
-          <span style={{
-            display: "inline-block",
-            background: "var(--green-dim)",
-            border: "1px solid var(--green-bdr)",
-            color: "var(--green)",
-            padding: "6px 16px",
-            borderRadius: "20px",
-            fontSize: "13px",
-            fontWeight: 500,
-            marginBottom: "18px",
-          }}>
-            {t("hero_badge")}
-          </span>
-        </motion.div>
 
         {/* H1 */}
         <motion.h1 variants={item} style={{
           fontFamily: "var(--font-syne)",
-          fontSize: "clamp(28px, 4.2vw, 54px)",
+          fontSize: "clamp(26px, 4vw, 52px)",
           fontWeight: 700,
           lineHeight: 1.15,
           letterSpacing: "-0.5px",
           color: "var(--tx)",
           marginBottom: "14px",
-          maxWidth: "680px",
+          maxWidth: "660px",
         }}>
           {t("hero_h1")}
         </motion.h1>
@@ -284,7 +267,7 @@ export default function Hero({ onChatOpen }: HeroProps) {
         {/* Sub */}
         <motion.p variants={item} style={{
           fontFamily: "var(--font-syne)",
-          fontSize: "clamp(11px, 1.3vw, 14px)",
+          fontSize: "clamp(10px, 1.2vw, 13px)",
           fontWeight: 600,
           letterSpacing: "0.28em",
           textTransform: "uppercase",
@@ -299,15 +282,9 @@ export default function Hero({ onChatOpen }: HeroProps) {
           <button
             onClick={scrollToEvents}
             style={{
-              background: "var(--green)",
-              color: "#080808",
-              border: "none",
-              borderRadius: "50px",
-              padding: "13px 28px",
-              fontSize: "15px",
-              fontWeight: 700,
-              cursor: "pointer",
-              fontFamily: "var(--font-syne)",
+              background: "var(--green)", color: "#080808", border: "none",
+              borderRadius: "50px", padding: "13px 28px", fontSize: "15px",
+              fontWeight: 700, cursor: "pointer", fontFamily: "var(--font-syne)",
               transition: "opacity 0.2s, transform 0.15s",
               boxShadow: "0 0 24px rgba(21,160,106,0.3)",
             }}
@@ -319,16 +296,10 @@ export default function Hero({ onChatOpen }: HeroProps) {
           <button
             onClick={onChatOpen}
             style={{
-              background: "transparent",
-              color: "var(--tx)",
-              border: "1px solid var(--border)",
-              borderRadius: "50px",
-              padding: "13px 28px",
-              fontSize: "15px",
-              fontWeight: 600,
-              cursor: "pointer",
-              fontFamily: "var(--font-syne)",
-              transition: "border-color 0.2s, color 0.2s",
+              background: "transparent", color: "var(--tx)",
+              border: "1px solid var(--border)", borderRadius: "50px",
+              padding: "13px 28px", fontSize: "15px", fontWeight: 600,
+              cursor: "pointer", fontFamily: "var(--font-syne)", transition: "border-color 0.2s, color 0.2s",
             }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "var(--green-bdr)"; (e.currentTarget as HTMLElement).style.color = "var(--green)"; }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "var(--border)"; (e.currentTarget as HTMLElement).style.color = "var(--tx)"; }}
@@ -338,13 +309,40 @@ export default function Hero({ onChatOpen }: HeroProps) {
         </motion.div>
       </motion.div>
 
+      {/* ── LOGO UNTEN LINKS ── */}
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 0.55, x: 0 }}
+        transition={{ delay: 1.2, duration: 0.8 }}
+        style={{
+          position: "absolute",
+          bottom: "28px",
+          left: "28px",
+          zIndex: 2,
+          pointerEvents: "none",
+        }}
+      >
+        <Image
+          src="/logo.png"
+          alt="donau LIFE"
+          width={160}
+          height={32}
+          style={{
+            width: "clamp(100px, 14vw, 160px)",
+            height: "auto",
+            filter: "brightness(8)",
+            opacity: 0.4,
+          }}
+        />
+      </motion.div>
+
       {/* Bounce Arrow */}
       <div
         onClick={scrollToEvents}
         style={{ position: "absolute", bottom: "32px", left: "50%", transform: "translateX(-50%)", zIndex: 2, cursor: "pointer" }}
       >
         <ChevronDown size={22} color="var(--tx2)" style={{ animation: "bounceArr 2s ease-in-out infinite" }} />
-        <style>{`@keyframes bounceArr { 0%,100%{transform:translateY(0);opacity:.5} 50%{transform:translateY(8px);opacity:1} }`}</style>
+        <style>{`@keyframes bounceArr { 0%,100%{transform:translateY(0);opacity:.4} 50%{transform:translateY(8px);opacity:.9} }`}</style>
       </div>
     </section>
   );
