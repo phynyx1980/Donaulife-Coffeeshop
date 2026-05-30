@@ -147,7 +147,7 @@ export function buildWhatsAppUrl(data: Partial<ReservationData>, lang: Language)
     `📞 ${isDE ? "Kontakt" : "Contact"}: ${data.contact ?? "–"}`,
   ].join("\n");
 
-  const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "436608522872";
+  const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "436608866699";
   return `https://wa.me/${number}?text=${encodeURIComponent(msg)}`;
 }
 
@@ -156,7 +156,7 @@ export function buildGeneralInquiryUrl(message: string, lang: Language): string 
   const prefix = isDE
     ? "💬 Allgemeine Anfrage an Donaulife Coffeeshop:\n\n"
     : "💬 General inquiry to Donaulife Coffeeshop:\n\n";
-  const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "436608522872";
+  const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "436608866699";
   return `https://wa.me/${number}?text=${encodeURIComponent(prefix + message)}`;
 }
 
