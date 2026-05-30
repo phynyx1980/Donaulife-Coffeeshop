@@ -12,21 +12,21 @@ const OFFERINGS = [
     accentRgb: "199,123,58",
     titleKey: "offering1_title" as const,
     textKey: "offering1_text" as const,
-    image: "/uploads/flyer-1780146110573.webp",
+    image: "/offerings/coffe and drinks.png",
   },
   {
     icon: "🌿",
     accentRgb: "57,211,83",
     titleKey: "offering2_title" as const,
     textKey: "offering2_text" as const,
-    image: "/uploads/flyer-1780146088915.jpg",
+    image: "/offerings/cbd and lifestyle.png",
   },
   {
     icon: "🎉",
     accentRgb: "139,92,246",
     titleKey: "offering3_title" as const,
     textKey: "offering3_text" as const,
-    image: "/uploads/flyer-1780146127735.jpg",
+    image: "/offerings/events and vibes.png",
   },
 ];
 
