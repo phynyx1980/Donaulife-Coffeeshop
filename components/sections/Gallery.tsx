@@ -36,7 +36,7 @@ function isSvgPlaceholder(file: string) {
 
 // Resolve file path: admin uploads use full /uploads/ path, legacy use /gallery/
 function resolveUrl(file: string): string {
-  if (file.startsWith("/")) return file;
+  if (file.startsWith("http") || file.startsWith("/")) return file;
   return `/gallery/${file}`;
 }
 
