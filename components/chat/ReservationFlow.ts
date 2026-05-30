@@ -151,4 +151,27 @@ export function buildWhatsAppUrl(data: Partial<ReservationData>, lang: Language)
   return `https://wa.me/${number}?text=${encodeURIComponent(msg)}`;
 }
 
+export function buildGeneralInquiryUrl(message: string, lang: Language): string {
+  const isDE = lang === "de";
+  const prefix = isDE
+    ? "💬 Allgemeine Anfrage an Donaulife Coffeeshop:\n\n"
+    : "💬 General inquiry to Donaulife Coffeeshop:\n\n";
+  const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "436608522872";
+  return `https://wa.me/${number}?text=${encodeURIComponent(prefix + message)}`;
+}
+
+export function isGeneralInquiryTrigger(text: string): boolean {
+  const lower = text.toLowerCase();
+  return (
+    lower.includes("anfrage") ||
+    lower.includes("frage") ||
+    lower.includes("allgemein") ||
+    lower.includes("kontakt") ||
+    lower.includes("info") ||
+    lower.includes("inquiry") ||
+    lower.includes("question") ||
+    lower.includes("contact")
+  );
+}
+
 export { type FlowState };

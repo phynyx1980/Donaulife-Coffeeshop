@@ -7,11 +7,13 @@ import { useLanguage } from "@/lib/i18n";
 import type { ChatMessage } from "@/lib/types";
 import {
   isReservationTrigger,
+  isGeneralInquiryTrigger,
   getNextStep,
   getStepPrompt,
   getStepQuickReplies,
   buildSummary,
   buildWhatsAppUrl,
+  buildGeneralInquiryUrl,
   applyInput,
   type FlowState,
 } from "./ReservationFlow";
@@ -31,22 +33,29 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [flow, setFlow] = useState<FlowState>(INITIAL_FLOW);
+  const [awaitingInquiry, setAwaitingInquiry] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const isReservationActive = flow.step !== "idle" && flow.step !== "done";
+
+  const GREETING_QUICK_REPLIES = useCallback((l: typeof lang) =>
+    l === "de"
+      ? ["Tisch reservieren 🌿", "Allgemeine Anfrage 💬", "Öffnungszeiten ⏰", "Events 🎉"]
+      : ["Reserve a table 🌿", "General inquiry 💬", "Opening hours ⏰", "Events 🎉"],
+  []);
 
   const addBotMessage = useCallback((content: string, replies: string[] = []) => {
     setMessages((prev) => [...prev, { role: "assistant", content }]);
     setQuickReplies(replies);
   }, []);
 
-  // Initial greeting
+  // Initial greeting with quick replies
   useEffect(() => {
     if (isOpen && messages.length === 0) {
-      addBotMessage(t("chat_greeting"));
+      addBotMessage(t("chat_greeting"), GREETING_QUICK_REPLIES(lang));
     }
-  }, [isOpen, messages.length, t, addBotMessage]);
+  }, [isOpen, messages.length, t, addBotMessage, lang, GREETING_QUICK_REPLIES]);
 
   // Scroll to bottom
   useEffect(() => {
@@ -63,6 +72,35 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
       setInput("");
       setQuickReplies([]);
       setLoading(true);
+
+      // ── General Inquiry Flow ──
+      if (awaitingInquiry) {
+        setAwaitingInquiry(false);
+        const waUrl = buildGeneralInquiryUrl(text, lang);
+        window.open(waUrl, "_blank");
+        addBotMessage(
+          lang === "de"
+            ? "Super! WhatsApp öffnet sich mit deiner Anfrage 💬\nWir melden uns so schnell wie möglich!"
+            : "Great! WhatsApp will open with your inquiry 💬\nWe'll get back to you as soon as possible!",
+          GREETING_QUICK_REPLIES(lang)
+        );
+        setLoading(false);
+        return;
+      }
+
+      // Trigger: Allgemeine Anfrage
+      const isInquiryQR =
+        text === "Allgemeine Anfrage 💬" || text === "General inquiry 💬";
+      if (isInquiryQR || (flow.step === "idle" && isGeneralInquiryTrigger(text))) {
+        setAwaitingInquiry(true);
+        addBotMessage(
+          lang === "de"
+            ? "Kein Problem! Was ist deine Anfrage? Schreib sie einfach hier rein und ich leite sie per WhatsApp weiter 💬"
+            : "No problem! What's your inquiry? Just write it here and I'll forward it via WhatsApp 💬"
+        );
+        setLoading(false);
+        return;
+      }
 
       // Reservation flow
       if (flow.step !== "idle") {
@@ -113,8 +151,9 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
         return;
       }
 
-      // Check for reservation trigger
-      if (isReservationTrigger(text)) {
+      // Check for reservation trigger (incl. Quick-Reply button)
+      const isReservationQR = text === "Tisch reservieren 🌿" || text === "Reserve a table 🌿";
+      if (isReservationQR || isReservationTrigger(text)) {
         const firstStep = getNextStep("idle");
         setFlow({ step: firstStep, data: {} });
         addBotMessage(
@@ -260,7 +299,11 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
                       background: "var(--green)",
                     }}
                   />
-                  {isReservationActive ? t("chat_reservation_badge") : t("chat_online")}
+                  {isReservationActive
+                    ? t("chat_reservation_badge")
+                    : awaitingInquiry
+                    ? (lang === "de" ? "Anfrage läuft" : "Inquiry in progress")
+                    : t("chat_online")}
                 </div>
               </div>
               <button
