@@ -83,7 +83,7 @@ function igPostToEvent(post: {
     description_de: body,
     description_en: body,
     tag: "Event",
-    tag_color: "#15a06a",
+    tag_color: "#39d353",
     flyer_url: post.thumbnail_url ?? post.media_url ?? null,
   };
 }
