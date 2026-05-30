@@ -288,8 +288,9 @@ function GalleryTab({ showToast }: { showToast: (m: string, ok?: boolean) => voi
     setItems((prev) => prev.filter((it) => it.id !== id));
   }
 
-  const realImages = items.filter((it) => it.file.startsWith("/uploads/"));
-  const placeholders = items.filter((it) => !it.file.startsWith("/uploads/"));
+  const isUploaded = (f: string) => f.startsWith("/uploads/") || f.startsWith("http");
+  const realImages = items.filter((it) => isUploaded(it.file));
+  const placeholders = items.filter((it) => !isUploaded(it.file));
 
   return (
     <>
