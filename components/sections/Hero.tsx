@@ -210,6 +210,7 @@ export default function Hero({ onChatOpen }: HeroProps) {
               justifyContent: "center",
               // Preserve original green colors: only drop-shadow for glow, no brightness distortion
               filter:
+                "hue-rotate(-22deg) saturate(0.85) brightness(1.45) " +
                 "drop-shadow(0 0 1px rgba(255,255,255,0.6)) " +
                 "drop-shadow(0 0 22px rgba(57,211,83,0.65)) " +
                 "drop-shadow(0 0 50px rgba(57,211,83,0.28))",
