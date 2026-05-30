@@ -123,7 +123,7 @@ export default function FindUs() {
                     fontSize: "15px",
                   }}
                 >
-                  <Phone size={14} color="var(--tx2)" /> +43 660 8522872
+                  <Phone size={14} color="var(--tx2)" /> +43 660 8866699
                 </a>
                 <a
                   href="mailto:coffeeshop@donaulife.at"
