@@ -1,0 +1,50 @@
+[
+  {
+    "id": "1",
+    "title": "Karaoke Night",
+    "date_de": "Fr, 30. Mai",
+    "date_en": "Fri, May 30th",
+    "time": "19:00",
+    "description_de": "Jeden letzten Freitag gehört die Bühne euch!",
+    "description_en": "Every last Friday the stage is yours!",
+    "tag": "Karaoke",
+    "tag_color": "#f59e0b",
+    "flyer_url": null
+  },
+  {
+    "id": "2",
+    "title": "BPM : Schicht",
+    "date_de": "Sa, 7. Juni",
+    "date_en": "Sat, June 7th",
+    "time": "20:00",
+    "description_de": "Elektronische Beats und entspannte Vibes mit unserem Resident DJ.",
+    "description_en": "Electronic beats and relaxed vibes with our resident DJ.",
+    "tag": "DJ",
+    "tag_color": "#8b5cf6",
+    "flyer_url": null
+  },
+  {
+    "id": "3",
+    "title": "River Grooves",
+    "date_de": "Fr, 13. Juni",
+    "date_en": "Fri, June 13th",
+    "time": "19:30",
+    "description_de": "Live-Musik direkt an der Donau — Funk, Soul und gute Laune.",
+    "description_en": "Live music right by the Danube — funk, soul and good vibes.",
+    "tag": "Live",
+    "tag_color": "#06b6d4",
+    "flyer_url": null
+  },
+  {
+    "id": "4",
+    "title": "Style Clash",
+    "date_de": "Sa, 21. Juni",
+    "date_en": "Sat, June 21st",
+    "time": "18:00",
+    "description_de": "Fashion meets Music — Kreative, Locals und gute Energie.",
+    "description_en": "Fashion meets Music — creatives, locals and great energy.",
+    "tag": "Special",
+    "tag_color": "#f43f5e",
+    "flyer_url": null
+  }
+]
