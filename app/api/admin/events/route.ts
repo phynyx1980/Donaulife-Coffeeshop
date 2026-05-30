@@ -1,25 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifySessionToken, COOKIE_NAME } from "@/lib/admin-auth";
-import { kvGet, kvSet } from "@/lib/kv";
+import { readStore, writeStore } from "@/lib/json-store";
 import type { DonauEvent } from "@/lib/types";
 
-const KV_KEY = "admin:events";
+const FALLBACK: DonauEvent[] = [];
 
 function auth(req: NextRequest): boolean {
   const token = req.cookies.get(COOKIE_NAME)?.value;
-  if (!token) return false;
-  return !!verifySessionToken(token);
+  return !!token && !!verifySessionToken(token);
 }
 
 export async function GET(req: NextRequest) {
   if (!auth(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  const events = await kvGet<DonauEvent[]>(KV_KEY);
-  return NextResponse.json(events ?? []);
+  const events = await readStore<DonauEvent[]>("events", FALLBACK);
+  return NextResponse.json(events);
 }
 
 export async function POST(req: NextRequest) {
   if (!auth(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const events = (await req.json()) as DonauEvent[];
-  await kvSet(KV_KEY, events);
+  await writeStore("events", events);
   return NextResponse.json({ ok: true });
 }
