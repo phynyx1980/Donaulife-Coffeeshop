@@ -91,6 +91,13 @@ function igPostToEvent(post: {
 export async function GET() {
   try {
     const { kvGet } = await import("@/lib/kv");
+
+    // Admin-gepflegte Events haben Vorrang
+    const adminEvents = await kvGet<DonauEvent[]>("admin:events");
+    if (adminEvents && adminEvents.length > 0) {
+      return NextResponse.json(adminEvents);
+    }
+
     const cached = await kvGet<object[]>("ig:events");
 
     if (cached && cached.length > 0) {
