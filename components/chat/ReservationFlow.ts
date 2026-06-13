@@ -83,8 +83,36 @@ const PROMPTS: Record<ReservationStep, StepConfig> = {
         : ["✅ Yes, submit!", "✏️ Edit"],
     field: null,
   },
+  edit_select: {
+    promptKey: (lang) =>
+      lang === "de"
+        ? "Was möchtest du ändern?"
+        : "What would you like to change?",
+    quickReplies: (lang) =>
+      lang === "de"
+        ? ["📅 Datum", "👥 Personen", "🪑 Bereich", "🎉 Anlass", "💬 Wünsche", "👤 Name", "📞 Kontakt", "🔙 Zurück zur Übersicht"]
+        : ["📅 Date", "👥 Persons", "🪑 Area", "🎉 Occasion", "💬 Wishes", "👤 Name", "📞 Contact", "🔙 Back to summary"],
+    field: null,
+  },
   done: { promptKey: () => "", field: null },
 };
+
+const EDIT_FIELD_STEPS: { emoji: string; step: ReservationStep }[] = [
+  { emoji: "📅", step: "date" },
+  { emoji: "👥", step: "persons" },
+  { emoji: "🪑", step: "seating" },
+  { emoji: "🎉", step: "occasion" },
+  { emoji: "💬", step: "wishes" },
+  { emoji: "👤", step: "name" },
+  { emoji: "📞", step: "contact" },
+];
+
+/** Ordnet eine Auswahl aus dem edit_select-Schritt dem zu bearbeitenden Schritt zu.
+ *  Liefert "confirm" zurück, wenn der User zur Zusammenfassung zurück will. */
+export function getEditFieldStep(text: string): ReservationStep {
+  const match = EDIT_FIELD_STEPS.find((f) => text.includes(f.emoji));
+  return match ? match.step : "confirm";
+}
 
 const STEP_ORDER: ReservationStep[] = [
   "idle", "date", "persons", "seating", "occasion", "wishes", "name", "contact", "confirm", "done",
