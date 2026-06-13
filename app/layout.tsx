@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Quicksand, DM_Sans, Nunito, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/lib/i18n";
+import FluidCursorEffect from "@/components/ui/smokey-cursor-effect";
 
 const quicksand = Quicksand({
   subsets: ["latin"],
