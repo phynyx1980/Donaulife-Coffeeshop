@@ -42,8 +42,8 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
 
   const GREETING_QUICK_REPLIES = useCallback((l: typeof lang) =>
     l === "de"
-      ? ["Tisch reservieren 🌿", "Allgemeine Anfrage 💬", "Öffnungszeiten ⏰", "Events 🎉"]
-      : ["Reserve a table 🌿", "General inquiry 💬", "Opening hours ⏰", "Events 🎉"],
+      ? ["Tisch reservieren 🌿", "Events 🎉", "Wo wir sind 📍", "Öffnungszeiten ⏰", "Allgemeine Anfrage 💬"]
+      : ["Reserve a table 🌿", "Events 🎉", "Where we are 📍", "Opening hours ⏰", "General inquiry 💬"],
   []);
 
   const addBotMessage = useCallback((content: string, replies: string[] = []) => {
