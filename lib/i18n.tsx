@@ -272,6 +272,8 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const stored = localStorage.getItem("donaulife-lang") as Language | null;
     if (stored === "de" || stored === "en") {
+      // Sprache aus localStorage übernehmen (nur client-seitig verfügbar)
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLangState(stored);
     }
   }, []);
