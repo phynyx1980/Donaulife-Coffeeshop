@@ -205,7 +205,7 @@ function EventsTab({ showToast }: { showToast: (m: string, ok?: boolean) => void
             {events.map((event) =>
               editingId === event.id
                 ? <EventForm key={event.id} form={editForm} onChange={setEditForm} onSave={confirmEdit} onCancel={() => setEditingId(null)} title={`Bearbeiten: ${event.title}`} />
-                : <EventRow key={event.id} event={event} onEdit={(e) => { setEditingId(e.id); const { id: _, ...r } = e; setEditForm(r); }} onDelete={deleteEvent} />
+                : <EventRow key={event.id} event={event} onEdit={(e) => { setEditingId(e.id); setEditForm(omitId(e)); }} onDelete={deleteEvent} />
             )}
             {events.length === 0 && (
               <div style={{ textAlign: "center", color: "var(--tx2)", padding: "40px", background: "var(--card)", borderRadius: "12px", border: "1px solid var(--border)" }}>
