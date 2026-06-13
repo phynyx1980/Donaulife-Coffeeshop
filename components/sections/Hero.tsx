@@ -5,6 +5,7 @@ import { motion, type Variants } from "framer-motion";
 import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
+import { SmokeBackground } from "@/components/ui/spooky-smoke-animation";
 
 interface HeroProps {
   onChatOpen: () => void;
