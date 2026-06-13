@@ -50,9 +50,10 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
     setQuickReplies(replies);
   }, []);
 
-  // Initial greeting with quick replies
+  // Initial greeting with quick replies — beim ersten Öffnen des Chats
   useEffect(() => {
     if (isOpen && messages.length === 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       addBotMessage(t("chat_greeting"), GREETING_QUICK_REPLIES(lang));
     }
   }, [isOpen, messages.length, t, addBotMessage, lang, GREETING_QUICK_REPLIES]);
