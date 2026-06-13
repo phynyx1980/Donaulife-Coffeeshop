@@ -203,12 +203,13 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
           body: JSON.stringify({ messages: nextMessages }),
         });
         const data = await res.json();
-        addBotMessage(data.response ?? "...");
+        addBotMessage(data.response ?? "...", GREETING_QUICK_REPLIES(lang));
       } catch {
         addBotMessage(
           lang === "de"
             ? "Sorry, da hat etwas nicht geklappt. Versuch es nochmal! 🌿"
-            : "Sorry, something went wrong. Please try again! 🌿"
+            : "Sorry, something went wrong. Please try again! 🌿",
+          GREETING_QUICK_REPLIES(lang)
         );
       } finally {
         setLoading(false);
