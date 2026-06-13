@@ -74,6 +74,7 @@ export default function RootLayout({
     >
       <body>
         <LanguageProvider>{children}</LanguageProvider>
+        <FluidCursorEffect variant="overlay" />
       </body>
     </html>
   );
