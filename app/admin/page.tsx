@@ -170,7 +170,7 @@ export default function AdminLogin() {
         </form>
 
         <p style={{ textAlign: "center", marginTop: "20px", fontSize: "12px", color: "var(--tx2)" }}>
-          <a href="/" style={{ color: "var(--tx2)", textDecoration: "none" }}>← Zurück zur Website</a>
+          <Link href="/" style={{ color: "var(--tx2)", textDecoration: "none" }}>← Zurück zur Website</Link>
         </p>
       </div>
     </div>
