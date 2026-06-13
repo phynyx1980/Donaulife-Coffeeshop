@@ -60,4 +60,5 @@ export type ReservationStep =
   | "name"
   | "contact"
   | "confirm"
+  | "edit_select"
   | "done";
