@@ -71,6 +71,12 @@ const FluidCursorEffect = ({ variant = "demo" }: FluidCursorEffectProps) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    // Overlay-Variante (Site-Hintergrund) läuft nur auf Desktop — auf Mobile
+    // wird die WebGL-Simulation aus Performance-Gründen gar nicht initialisiert
+    if (variant === "overlay" && window.matchMedia("(max-width: 767px)").matches) {
+      return;
+    }
+
     // Configuration
     const config = {
       SIM_RESOLUTION: 128,
