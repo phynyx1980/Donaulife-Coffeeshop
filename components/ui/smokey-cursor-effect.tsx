@@ -1209,7 +1209,7 @@ const FluidCursorEffect = ({ variant = "demo" }: FluidCursorEffectProps) => {
       }
       if (cleanup) cleanup();
     };
-  }, []);
+  }, [variant]);
 
   const resetSimulation = () => {
     window.location.reload();
