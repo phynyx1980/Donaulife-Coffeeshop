@@ -93,7 +93,7 @@ export default function Navbar({ onChatOpen }: NavbarProps) {
               style={{
                 background: "none",
                 border: "none",
-                color: "var(--tx2)",
+                color: "rgba(255,255,255,0.7)",
                 fontSize: "14px",
                 cursor: "pointer",
                 padding: "8px 12px",
@@ -102,7 +102,7 @@ export default function Navbar({ onChatOpen }: NavbarProps) {
                 fontFamily: "var(--font-dm-sans)",
               }}
               onMouseEnter={(e) => (e.currentTarget.style.color = "var(--tx)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--tx2)")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.7)")}
             >
               {link.label}
             </button>
