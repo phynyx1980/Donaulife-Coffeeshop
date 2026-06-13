@@ -33,6 +33,11 @@ const EMPTY_EVENT: Omit<DonauEvent, "id"> = {
   tag: "", tag_color: "#39d353", flyer_url: null,
 };
 
+function omitId({ id, ...rest }: DonauEvent): Omit<DonauEvent, "id"> {
+  void id;
+  return rest;
+}
+
 const CATS = [
   { key: "vibes", label: "Vibes 🌿" },
   { key: "events", label: "Events 🎉" },
