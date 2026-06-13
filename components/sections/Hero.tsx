@@ -166,6 +166,19 @@ export default function Hero({ onChatOpen }: HeroProps) {
         background: "var(--bg)",
       }}
     >
+      {/* Shader smoke background */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 0,
+          opacity: 0.35,
+          pointerEvents: "none",
+        }}
+      >
+        <SmokeBackground smokeColor="#39d353" />
+      </div>
+
       {/* Canvas background */}
       <canvas
         ref={canvasRef}
