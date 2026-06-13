@@ -156,6 +156,8 @@ function EventsTab({ showToast }: { showToast: (m: string, ok?: boolean) => void
     finally { setLoading(false); }
   }, [router]);
 
+  // Daten beim Mount laden — Standard-Fetch-on-Mount-Pattern
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { load(); }, [load]);
 
   async function save(updated: DonauEvent[]) {
