@@ -247,6 +247,8 @@ function GalleryTab({ showToast }: { showToast: (m: string, ok?: boolean) => voi
     finally { setLoading(false); }
   }, []);
 
+  // Daten beim Mount laden — Standard-Fetch-on-Mount-Pattern
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { load(); }, [load]);
 
   async function uploadFiles(files: File[]) {
