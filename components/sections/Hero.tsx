@@ -222,10 +222,9 @@ export default function Hero({ onChatOpen }: HeroProps) {
             style={{
               display: "flex",
               justifyContent: "center",
-              // Preserve original green colors: only drop-shadow for glow, no brightness distortion
+              // Logo in Weiß (wie "COFFEE, VIBES"), grüner Glow als Akzent
               filter:
-                "hue-rotate(-22deg) saturate(0.85) brightness(1.45) " +
-                "drop-shadow(0 0 1px rgba(255,255,255,0.6)) " +
+                "brightness(0) invert(1) opacity(0.7) " +
                 "drop-shadow(0 0 22px rgba(57,211,83,0.65)) " +
                 "drop-shadow(0 0 50px rgba(57,211,83,0.28))",
             }}
