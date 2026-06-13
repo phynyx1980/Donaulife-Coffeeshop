@@ -209,7 +209,7 @@ function EventsTab({ showToast }: { showToast: (m: string, ok?: boolean) => void
             )}
             {events.length === 0 && (
               <div style={{ textAlign: "center", color: "var(--tx2)", padding: "40px", background: "var(--card)", borderRadius: "12px", border: "1px solid var(--border)" }}>
-                Noch keine Events. Klicke auf „Neues Event".
+                Noch keine Events. Klicke auf „Neues Event&quot;.
               </div>
             )}
           </div>
