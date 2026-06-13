@@ -184,7 +184,7 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
         setLoading(false);
       }
     },
-    [messages, loading, flow, lang, t, addBotMessage, awaitingInquiry, GREETING_QUICK_REPLIES]
+    [messages, loading, flow, lang, addBotMessage, awaitingInquiry, GREETING_QUICK_REPLIES]
   );
 
   return (
