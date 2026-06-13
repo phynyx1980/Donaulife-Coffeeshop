@@ -3,6 +3,8 @@ import type { Language, ReservationStep, ReservationData } from "@/lib/types";
 interface FlowState {
   step: ReservationStep;
   data: Partial<ReservationData>;
+  /** Wenn true: nach dem nächsten Eintrag direkt zurück zur Zusammenfassung statt im Flow weiter */
+  editing?: boolean;
 }
 
 interface StepConfig {
