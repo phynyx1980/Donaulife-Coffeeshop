@@ -106,7 +106,7 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
 
       // Reservation flow
       if (flow.step !== "idle") {
-        // Confirm step → öffnet WhatsApp
+        // Confirm step → Ja = WhatsApp, Ändern = Auswahl welches Feld (Reservierung bleibt erhalten)
         if (flow.step === "confirm") {
           const isYes = text.startsWith("✅") || text.toLowerCase().includes("yes") || text.toLowerCase().includes("abschi");
           if (isYes) {
@@ -115,22 +115,51 @@ export default function ChatWidget({ isOpen, onClose, onOpen }: ChatWidgetProps)
             addBotMessage(
               lang === "de"
                 ? "Super! WhatsApp öffnet sich gleich mit deiner Reservierungsanfrage 💬\nWir melden uns so schnell wie möglich!"
-                : "Great! WhatsApp will open with your reservation request 💬\nWe'll get back to you as soon as possible!"
+                : "Great! WhatsApp will open with your reservation request 💬\nWe'll get back to you as soon as possible!",
+              GREETING_QUICK_REPLIES(lang)
             );
+            setFlow(INITIAL_FLOW);
           } else {
-            addBotMessage(
-              lang === "de"
-                ? "Kein Problem! Sag mir einfach, wenn du reservieren möchtest 🌿"
-                : "No problem! Just let me know when you'd like to make a reservation 🌿"
-            );
+            setFlow({ ...flow, step: "edit_select" });
+            addBotMessage(getStepPrompt("edit_select", lang), getStepQuickReplies("edit_select", lang));
           }
-          setFlow(INITIAL_FLOW);
+          setLoading(false);
+          return;
+        }
+
+        // Auswahl, welches Feld geändert werden soll — restliche Reservierungsdaten bleiben erhalten
+        if (flow.step === "edit_select") {
+          const target = getEditFieldStep(text);
+          if (target === "confirm") {
+            const summary = buildSummary(flow.data, lang);
+            const confirmPrompt = lang === "de"
+              ? `Alles klar! Hier nochmal deine Reservierung:\n\n${summary}`
+              : `All good! Here's your reservation summary:\n\n${summary}`;
+            setFlow({ ...flow, step: "confirm" });
+            addBotMessage(confirmPrompt, getStepQuickReplies("confirm", lang));
+          } else {
+            setFlow({ step: target, data: flow.data, editing: true });
+            addBotMessage(getStepPrompt(target, lang), getStepQuickReplies(target, lang));
+          }
           setLoading(false);
           return;
         }
 
         // Apply input and advance
         const updatedState = applyInput(flow, text);
+
+        // Einzelnes Feld bearbeitet → direkt zurück zur Zusammenfassung statt im Flow weiter
+        if (flow.editing) {
+          const summary = buildSummary(updatedState.data, lang);
+          const confirmPrompt = lang === "de"
+            ? `Alles klar! Hier nochmal deine Reservierung:\n\n${summary}`
+            : `All good! Here's your reservation summary:\n\n${summary}`;
+          setFlow({ step: "confirm", data: updatedState.data });
+          addBotMessage(confirmPrompt, getStepQuickReplies("confirm", lang));
+          setLoading(false);
+          return;
+        }
+
         const nextStep = getNextStep(flow.step);
 
         if (nextStep === "confirm") {
