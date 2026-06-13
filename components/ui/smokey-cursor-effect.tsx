@@ -1229,7 +1229,7 @@ const FluidCursorEffect = ({ variant = "demo" }: FluidCursorEffectProps) => {
 
   if (variant === "overlay") {
     return (
-      <div className="fixed inset-0 z-[9999] pointer-events-none">
+      <div className="fixed inset-0 z-[9999] pointer-events-none hidden md:block">
         <canvas ref={canvasRef} id="fluid" className="w-full h-full block" />
       </div>
     );
